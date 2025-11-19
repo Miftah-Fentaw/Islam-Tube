@@ -1,0 +1,70 @@
+lib/
+│
+├── main.dart
+│
+├── core/
+│   ├── constants/
+│   │   ├── colors.dart
+│   │   ├── app_texts.dart
+│   │   └── sizes.dart
+│   │
+│   ├── utils/
+│   │   ├── validators.dart
+│   │   ├── formatters.dart
+│   │   └── helpers.dart
+│   │
+│   └── services/
+│       ├── api_service.dart        // fetch videos from public APIs
+│       ├── youtube_service.dart    // if using YouTube API
+│       ├── scraping_service.dart   // if scraping halal Islamic websites
+│       └── cache_service.dart      // local storage for likes / bookmarks
+│
+├── data/
+│   ├── models/
+│   │   ├── video_model.dart
+│   │   ├── user_model.dart
+│   │   └── category_model.dart
+│   │
+│   ├── repository/
+│       ├── video_repository.dart   // full logic for loading videos
+│       └── category_repository.dart
+│
+├── presentation/
+│   ├── screens/
+│   │   ├── home/
+│   │   │   ├── home_screen.dart
+│   │   │   ├── widgets/
+│   │   │   │   ├── video_feed_item.dart
+│   │   │   │   └── short_video_player.dart
+│   │   │   └── controllers/
+│   │   │       └── home_controller.dart
+│   │   │
+│   │   ├── video_player/
+│   │   │   ├── video_player_screen.dart
+│   │   │   └── widgets/
+│   │   │       └── fullscreen_controls.dart
+│   │   │
+│   │   ├── categories/
+│   │   │   ├── categories_screen.dart
+│   │   │   └── category_video_list.dart
+│   │   │
+│   │   ├── bookmarks/
+│   │   │   ├── bookmarks_screen.dart
+│   │   │   └── bookmark_item.dart
+│   │   │
+│   │   └── settings/
+│   │       └── settings_screen.dart
+│   │
+│   ├── widgets/
+│   │   ├── appbar_simple.dart
+│   │   ├── loading_indicator.dart
+│   │   ├── error_retry.dart
+│   │   └── video_action_buttons.dart
+│   │
+│   └── theme/
+│       ├── app_theme.dart
+│       └── dark_theme.dart
+│
+└── routes/
+    ├── app_routes.dart
+    └── route_generator.dart
