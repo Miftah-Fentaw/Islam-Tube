@@ -1,6 +1,3 @@
-
-// ignore_for_file: dead_code, unnecessary_null_comparison
-
 import 'package:deen_stream/core/models/yt_videos.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -70,7 +67,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ),
         ],
         onEnded: (data) {
-          // Optional: play next video
         },
       ),
       builder: (context, player) {
@@ -78,13 +74,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           backgroundColor: Colors.black,
           body: Column(
             children: [
-              // YouTube Player
               AspectRatio(
                 aspectRatio: 16 / 9,
                 child: player,
               ),
 
-              // Video Info Section (below player)
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -97,7 +91,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Title
                         Text(
                           widget.video.title,
                           style: TextStyle(
@@ -108,7 +101,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         ),
                         const SizedBox(height: 12),
 
-                        // Channel & Published
                         Row(
                           children: [
                             CircleAvatar(
@@ -144,9 +136,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             IconButton(
                               icon: Icon(Icons.share_rounded, color: Colors.blue.shade700),
                               onPressed: () {
-                                // Share video link
                                 final link = "https://youtu.be/${widget.video.videoId}";
-                                // Use share_plus package later
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text("Link copied: $link")),
                                 );
@@ -157,7 +147,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
                         const Divider(height: 40),
 
-                        // Description
                         if (widget.video.description.isNotEmpty) ...[
                           const Text(
                             "Description",
@@ -172,7 +161,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
                         const SizedBox(height: 30),
 
-                        // Action Buttons
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

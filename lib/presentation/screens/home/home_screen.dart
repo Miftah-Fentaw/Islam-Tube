@@ -1,5 +1,3 @@
-// lib/presentation/screens/home_screen.dart
-
 import 'package:deen_stream/core/models/yt_videos.dart';
 import 'package:deen_stream/core/services/ytvideos_service.dart';
 import 'package:deen_stream/presentation/screens/home/video_player_screen.dart';
@@ -14,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> categories = [
-    "All", // ← New "All" category
+    "All",
     "Quran",
     "Dawah",
     "Hadiths",
@@ -37,29 +35,27 @@ class _HomeScreenState extends State<HomeScreen> {
     final service = VideosService(
       apiKey: 'AIzaSyA18TP4LzyYpnDrIfdwVIFbtOgNxQzDj8I',
       channelUploads: {
-        'UC2w3MiX-1eS5GBKk8SA8DTA': 'UUNB_OaI4524fASt8h0IL8dw', // Mufti Menk
+        'UC2w3MiX-1eS5GBKk8SA8DTA': 'UUNB_OaI4524fASt8h0IL8dw',
         'UCt7K2pQVcO7o6NsF1bnsIpA':
-            'UUt7K2pQVcO7o6NsF1bnsIpA', // Muslim Lantern
+            'UUt7K2pQVcO7o6NsF1bnsIpA',
         'UCHGAqdQBKTVON_FUCIYCh3Q':
-            'UUHGAqdQBKTVON_FUCIYCh3Q', // MercifulServant
+            'UUHGAqdQBKTVON_FUCIYCh3Q',
         'UCVy0F5K5GhR4i_K2w2w5uLA':
-            'UUVy0F5K5GhR4i_K2w2w5uLA', // Daily Reminder
-        'UCGsw8s3xVEnuKGu1y6q6zBQ': 'UUGsw8s3xVEnuKGu1y6q6zBQ', // OnePath
-        'UCtm8rtofLSnaIBi3noB0INg': 'UUtm8rtofLSnaIBi3noB0INg', // Omar Suleiman
+            'UUVy0F5K5GhR4i_K2w2w5uLA',
+        'UCGsw8s3xVEnuKGu1y6q6zBQ': 'UUGsw8s3xVEnuKGu1y6q6zBQ',
+        'UCtm8rtofLSnaIBi3noB0INg': 'UUtm8rtofLSnaIBi3noB0INg',
         'UC1p1m7Txi_V0spldYKcYAEg':
-            'UU1p1m7Txi_V0spldYKcYAEg', // Nouman Ali Khan
-        'UCb0jo2XG4z2ih8sTGUxj7zQ': 'UUb0jo2XG4z2ih8sTGUxj7zQ', // Yasir Qadhi
-        'UCs3EQMckf2P91LEH4dM2dJg': 'UU3vHW2h22WE-pNi5WJtRIjg', // Yaqeen
+            'UU1p1m7Txi_V0spldYKcYAEg',
+        'UCb0jo2XG4z2ih8sTGUxj7zQ': 'UUb0jo2XG4z2ih8sTGUxj7zQ',
+        'UCs3EQMckf2P91LEH4dM2dJg': 'UU3vHW2h22WE-pNi5WJtRIjg',
       },
     );
 
     try {
       final allVideos = await service.fetchVideos(maxResults: 100);
 
-      // "All" category = all videos
       categoryVideos["All"] = allVideos;
 
-      // Categorize others
       for (var cat in categories.where((c) => c != "All")) {
         categoryVideos[cat] = allVideos.where((v) {
           final lowerTitle = v.title.toLowerCase();
@@ -86,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
               child: Align(
@@ -106,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 8),
 
-            // Category Chips
             SizedBox(
               height: 50,
               child: ListView.builder(
@@ -163,7 +157,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 16),
 
-            // Video Grid/List (Classic YouTube Style)
             Expanded(
               child: isLoading
                   ? Center(
@@ -183,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   : RefreshIndicator(
                     onRefresh: () => _loadAllVideos(),
-                    
+
                     child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: videos.length,
@@ -215,7 +208,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Thumbnail (top)
                                   ClipRRect(
                                     borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(16),
@@ -235,8 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-                    
-                                  // Title + Channel (bottom)
+
                                   Padding(
                                     padding: const EdgeInsets.all(14),
                                     child: Column(
@@ -257,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Row(
                                           children: [
                                             Icon(
-                                              Icons.person_outline,
+                                              Icons.person_2,
                                               size: 16,
                                               color: Colors.blue.shade700,
                                             ),
