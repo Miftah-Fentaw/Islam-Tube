@@ -1,17 +1,22 @@
-# deen_stream
+# IslamTube – Islamic Video Aggregator
 
-A new Flutter project.
+## Overview
+IslamTube is a mobile app that collects Islamic videos from YouTube using the YouTube Data API.  
+It focuses only on trusted Islamic channels and shows clean feeds of shorts, lectures, tafsir, reminders, and recitations.
 
-## Getting Started
+## Features
+- Islamic video feed (shorts + full videos)
+- Search across selected Islamic channels
+- Swipe-based shorts mode
+- Embedded YouTube player
+- Clean, distraction-free UI
 
-This project is a starting point for a Flutter application.
+## Setup
+- Add your YouTube API key
+- Add your approved Islamic channel IDs
+- Build and run the app (Android/iOS)
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Islam-Tube
+| ![1](assets/screenshots/home.jpg) | ![2](assets/screenshots/shorts.jpg) | ![3](assets/screenshots/shorts.jpg) | ![4](assets/screenshots/profile.jpg) |
+|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
