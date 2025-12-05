@@ -18,5 +18,5 @@ It focuses only on trusted Islamic channels and shows clean feeds of shorts, lec
 
 ## Screenshots
 
-| ![1](assets/screenshots/home.jpg) | ![2](assets/screenshots/shorts.jpg) | ![3](assets/screenshots/shorts.jpg) | ![4](assets/screenshots/profile.jpg) |
+| ![1](assets/screenshots/home.jpg) | ![2](assets/screenshots/shorts.jpg) | ![3](assets/screenshots/search.jpg.jpg) | ![4](assets/screenshots/profile.jpg) |
 |--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
