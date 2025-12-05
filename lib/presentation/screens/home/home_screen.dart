@@ -1,3 +1,4 @@
+import 'package:deen_stream/apikeys.dart';
 import 'package:deen_stream/core/models/yt_videos.dart';
 import 'package:deen_stream/core/services/ytvideos_service.dart';
 import 'package:deen_stream/presentation/screens/home/video_player_screen.dart';
@@ -33,19 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadAllVideos() async {
     final service = VideosService(
-      apiKey: 'AIzaSyA18TP4LzyYpnDrIfdwVIFbtOgNxQzDj8I',
+      apiKey: videosapikey,
       channelUploads: {
         'UC2w3MiX-1eS5GBKk8SA8DTA': 'UUNB_OaI4524fASt8h0IL8dw',
-        'UCt7K2pQVcO7o6NsF1bnsIpA':
-            'UUt7K2pQVcO7o6NsF1bnsIpA',
-        'UCHGAqdQBKTVON_FUCIYCh3Q':
-            'UUHGAqdQBKTVON_FUCIYCh3Q',
-        'UCVy0F5K5GhR4i_K2w2w5uLA':
-            'UUVy0F5K5GhR4i_K2w2w5uLA',
+        'UCt7K2pQVcO7o6NsF1bnsIpA': 'UUt7K2pQVcO7o6NsF1bnsIpA',
+        'UCHGAqdQBKTVON_FUCIYCh3Q': 'UUHGAqdQBKTVON_FUCIYCh3Q',
+        'UCVy0F5K5GhR4i_K2w2w5uLA': 'UUVy0F5K5GhR4i_K2w2w5uLA',
         'UCGsw8s3xVEnuKGu1y6q6zBQ': 'UUGsw8s3xVEnuKGu1y6q6zBQ',
         'UCtm8rtofLSnaIBi3noB0INg': 'UUtm8rtofLSnaIBi3noB0INg',
-        'UC1p1m7Txi_V0spldYKcYAEg':
-            'UU1p1m7Txi_V0spldYKcYAEg',
+        'UC1p1m7Txi_V0spldYKcYAEg': 'UU1p1m7Txi_V0spldYKcYAEg',
         'UCb0jo2XG4z2ih8sTGUxj7zQ': 'UUb0jo2XG4z2ih8sTGUxj7zQ',
         'UCs3EQMckf2P91LEH4dM2dJg': 'UU3vHW2h22WE-pNi5WJtRIjg',
       },
@@ -175,9 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   : RefreshIndicator(
-                    onRefresh: () => _loadAllVideos(),
+                      onRefresh: () => _loadAllVideos(),
 
-                    child: ListView.builder(
+                      child: ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: videos.length,
                         itemBuilder: (context, index) {
@@ -272,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                       ),
-                  ),
+                    ),
             ),
           ],
         ),

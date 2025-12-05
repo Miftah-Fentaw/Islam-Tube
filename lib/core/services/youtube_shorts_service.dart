@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis/youtube/v3.dart' as ytb;
 import 'package:deen_stream/core/constants/youtube sources.dart';
+import 'package:deen_stream/apikeys.dart';
 
-const String _apiKey = 'AIzaSyA18TP4LzyYpnDrIfdwVIFbtOgNxQzDj8I';
+const  String _apiKey = youtubeshortsapikey;
 
 class YoutubeService {
   
