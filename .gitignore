@@ -32,6 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+/lib/apikeys.dart
 
 # Symbolication related
 app.*.symbols
