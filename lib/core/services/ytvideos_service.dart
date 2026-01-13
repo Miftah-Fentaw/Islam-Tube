@@ -31,7 +31,9 @@ class VideosService {
 
         videos.addAll(normalVideos);
 
-        debugPrint('From ${entry.key}: ${normalVideos.length} normal videos added → Total: ${videos.length}');
+        debugPrint(
+          'From ${entry.key}: ${normalVideos.length} normal videos added → Total: ${videos.length}',
+        );
       } catch (e) {
         debugPrint('Error fetching playlist ${entry.key}: $e');
       }
@@ -42,7 +44,10 @@ class VideosService {
     return videos.take(maxResults).toList();
   }
 
-  Future<Map<String, dynamic>> _fetchPlaylist(http.Client client, String playlistId) async {
+  Future<Map<String, dynamic>> _fetchPlaylist(
+    http.Client client,
+    String playlistId,
+  ) async {
     final url = Uri.parse(
       'https://www.googleapis.com/youtube/v3/playlistItems'
       '?part=snippet'
@@ -64,24 +69,31 @@ class VideosService {
   List<YoutubeVideo> _parseVideos(Map<String, dynamic> jsonData) {
     final items = jsonData['items'] as List<dynamic>? ?? [];
 
-    return items.map((item) {
-      final snippet = item['snippet'] as Map<String, dynamic>;
-      final resourceId = snippet['resourceId'] as Map<String, dynamic>?;
-      final thumbs = snippet['thumbnails'] as Map<String, dynamic>? ?? {};
+    return items
+        .map((item) {
+          final snippet = item['snippet'] as Map<String, dynamic>;
+          final resourceId = snippet['resourceId'] as Map<String, dynamic>?;
+          final thumbs = snippet['thumbnails'] as Map<String, dynamic>? ?? {};
 
-      return YoutubeVideo(
-        videoId: resourceId?['videoId'] as String? ?? '',
-        title: snippet['title'] as String? ?? 'Untitled',
-        description: snippet['description'] as String? ?? '',
-        channelId: snippet['channelId'] as String? ?? '',
-        channelTitle: snippet['channelTitle'] as String? ?? 'Unknown Channel',
-        thumbnailUrl: thumbs['high']?['url'] as String? ??
-            thumbs['medium']?['url'] as String? ??
-            thumbs['default']?['url'] as String? ??
-            'https://i.ytimg.com/vi/default.jpg',
-        publishedAt: DateTime.tryParse(snippet['publishedAt'] as String? ?? '') ?? DateTime.now(),
-      );
-    }).where((v) => v.videoId.isNotEmpty).toList(); // Safety: skip broken items
+          return YoutubeVideo(
+            videoId: resourceId?['videoId'] as String? ?? '',
+            title: snippet['title'] as String? ?? 'Untitled',
+            description: snippet['description'] as String? ?? '',
+            channelId: snippet['channelId'] as String? ?? '',
+            channelTitle:
+                snippet['channelTitle'] as String? ?? 'Unknown Channel',
+            thumbnailUrl:
+                thumbs['high']?['url'] as String? ??
+                thumbs['medium']?['url'] as String? ??
+                thumbs['default']?['url'] as String? ??
+                'https://i.ytimg.com/vi/default.jpg',
+            publishedAt:
+                DateTime.tryParse(snippet['publishedAt'] as String? ?? '') ??
+                DateTime.now(),
+          );
+        })
+        .where((v) => v.videoId.isNotEmpty)
+        .toList(); // Safety: skip broken items
   }
 
   // Super accurate Shorts filter
@@ -99,5 +111,58 @@ class VideosService {
         lowerTitle.startsWith('short:') ||
         lowerTitle.startsWith('short -') ||
         lowerTitle.startsWith('short |');
+  }
+
+  Future<List<YoutubeVideo>> searchVideos(
+    String query, {
+    int maxResults = 25,
+  }) async {
+    final client = http.Client();
+    final url = Uri.parse(
+      'https://www.googleapis.com/youtube/v3/search'
+      '?part=snippet'
+      '&q=$query'
+      '&maxResults=$maxResults'
+      '&type=video'
+      '&key=$apiKey',
+    );
+
+    try {
+      final response = await client.get(url);
+      if (response.statusCode != 200) {
+        throw Exception('Failed to search videos: ${response.statusCode}');
+      }
+
+      final jsonData = json.decode(response.body);
+      final items = jsonData['items'] as List<dynamic>? ?? [];
+
+      return items
+          .map((item) {
+            final snippet = item['snippet'] as Map<String, dynamic>;
+            final id = item['id'] as Map<String, dynamic>;
+            final thumbs = snippet['thumbnails'] as Map<String, dynamic>? ?? {};
+
+            return YoutubeVideo(
+              videoId: id['videoId'] as String? ?? '',
+              title: snippet['title'] as String? ?? 'Untitled',
+              description: snippet['description'] as String? ?? '',
+              channelId: snippet['channelId'] as String? ?? '',
+              channelTitle:
+                  snippet['channelTitle'] as String? ?? 'Unknown Channel',
+              thumbnailUrl:
+                  thumbs['high']?['url'] as String? ??
+                  thumbs['medium']?['url'] as String? ??
+                  thumbs['default']?['url'] as String? ??
+                  'https://i.ytimg.com/vi/default.jpg',
+              publishedAt:
+                  DateTime.tryParse(snippet['publishedAt'] as String? ?? '') ??
+                  DateTime.now(),
+            );
+          })
+          .where((v) => v.videoId.isNotEmpty)
+          .toList();
+    } finally {
+      client.close();
+    }
   }
 }
