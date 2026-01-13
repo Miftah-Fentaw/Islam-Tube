@@ -74,8 +74,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           backgroundColor: Colors.black,
           body: Column(
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              SizedBox(height: 20),
               AspectRatio(
-                aspectRatio: 16 / 9,
+                aspectRatio: 16 / 9,  
                 child: player,
               ),
 

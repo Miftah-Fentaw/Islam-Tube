@@ -3,6 +3,7 @@ import 'package:deen_stream/core/models/yt_videos.dart';
 import 'package:deen_stream/core/services/ytvideos_service.dart';
 import 'package:deen_stream/presentation/screens/home/video_player_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -86,10 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   "Islam Tube",
                   style: TextStyle(
+                    fontFamily: GoogleFonts.amiri().fontFamily,
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue.shade700,
-                    fontFamily: 'Amiri',
                     letterSpacing: 1,
                   ),
                 ),
@@ -112,19 +113,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       duration: const Duration(milliseconds: 300),
                       margin: const EdgeInsets.symmetric(horizontal: 6),
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
+                        horizontal: 16,
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
                         color: selected
                             ? Colors.blue.shade700
                             : Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(15),
                         border: Border.all(
                           color: selected
                               ? Colors.blue.shade700
                               : Colors.grey.shade300,
-                          width: 1.8,
+                          width: 1.3,
                         ),
                         boxShadow: selected
                             ? [
@@ -136,14 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]
                             : null,
                       ),
-                      child: Text(
-                        categories[index],
-                        style: TextStyle(
-                          color: selected ? Colors.white : Colors.grey.shade800,
-                          fontWeight: selected
-                              ? FontWeight.bold
-                              : FontWeight.w600,
-                          fontSize: 15,
+                      child: FittedBox(
+                        child: Text(
+                          categories[index],
+                          style: TextStyle(
+                            color: selected ? Colors.white : Colors.grey.shade800,
+                            fontWeight: selected
+                                ? FontWeight.bold
+                                : FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
