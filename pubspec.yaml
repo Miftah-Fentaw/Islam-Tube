@@ -19,6 +19,8 @@ dependencies:
   infinite_scroll_pagination: null
   visibility_detector: ^0.4.0+2
   youtube_player_flutter: ^9.1.3
+  google_fonts: ^7.0.1
+  shared_preferences: ^2.5.4
 
 dev_dependencies:
   flutter_lints: ^5.0.0
