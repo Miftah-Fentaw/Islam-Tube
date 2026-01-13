@@ -1,3 +1,4 @@
+import 'package:deen_stream/presentation/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_stream/presentation/screens/personal/personal_screen.dart';
 import 'package:deen_stream/presentation/screens/search/search_screen.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  HomePage(),
+      home:  SignupScreen(),
     );
   }
 }
