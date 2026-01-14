@@ -34,11 +34,8 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     _videosService = VideosService(
       apiKey: videosapikey,
-      channelUploads: {}, // Not needed for search
+      channelUploads: {}, 
     );
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _focusNode.requestFocus();
-    });
   }
 
   @override
@@ -123,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         onSubmitted: (value) => _performSearch(value),
                         onChanged: (value) {
-                          setState(() {}); // For clear icon visibility
+                          setState(() {});
                         },
                       ),
                     ),
