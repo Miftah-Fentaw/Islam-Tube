@@ -94,6 +94,3 @@ lib/
    ```bash
    flutter run
    ```
-
----
-<p align="center">Made with ❤️ for the Ummah</p>
