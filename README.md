@@ -14,13 +14,12 @@
 | <img src="assets/screenshots/Screenshot_20260114-174140.jpg" width="220"> | <img src="assets/screenshots/Screenshot_20260114-174348.jpg" width="220"> | <img src="assets/screenshots/Screenshot_20260114-174228.jpg" width="220"> |
 
 | Personal Settings | signin | signup |
-|:---:|:---:|
+|:---:|:---:|:---:|
 | <img src="assets/screenshots/Screenshot_20260114-174253.jpg" width="220"> | <img src="assets/screenshots/Screenshot_20260114-174637.jpg" width="220"> | <img src="assets/screenshots/Screenshot_20260114-174647.jpg" width="220">
 
 <hr />
 
 ## ✨ Key Features
-174253
 - 🕋 **Curated Content**: Aggregates videos exclusively from trusted Islamic channels.
 - 📺 **Seamless Playback**: High-quality video streaming using an integrated YouTube player.
 - ⚡ **Islamic Shorts**: A dedicated swipe-based vertical feed for quick reminders and clips.
