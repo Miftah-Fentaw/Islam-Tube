@@ -27,13 +27,40 @@ class VideosService {
         final parsedVideos = _parseVideos(jsonData);
 
         // Filter out Shorts
-        final normalVideos = parsedVideos.where((v) => !_isShort(v)).toList();
+        final potentialVideos = parsedVideos
+            .where((v) => !_isShort(v))
+            .toList();
 
-        videos.addAll(normalVideos);
+        if (potentialVideos.isNotEmpty) {
+          final videoIds = potentialVideos.map((v) => v.videoId).join(',');
+          final statusUrl = Uri.parse(
+            'https://www.googleapis.com/youtube/v3/videos'
+            '?part=status'
+            '&id=$videoIds'
+            '&key=$apiKey',
+          );
 
-        debugPrint(
-          'From ${entry.key}: ${normalVideos.length} normal videos added → Total: ${videos.length}',
-        );
+          final response = await client.get(statusUrl);
+          if (response.statusCode == 200) {
+            final statusData = json.decode(response.body);
+            final statusItems = statusData['items'] as List<dynamic>? ?? [];
+            final Set<String> embeddableIds = statusItems
+                .where(
+                  (item) => (item['status']?['embeddable'] as bool? ?? false),
+                )
+                .map((item) => item['id'] as String)
+                .toSet();
+
+            final embeddableVideos = potentialVideos
+                .where((v) => embeddableIds.contains(v.videoId))
+                .toList();
+
+            videos.addAll(embeddableVideos);
+            debugPrint(
+              'From ${entry.key}: ${embeddableVideos.length} embeddable normal videos added → Total: ${videos.length}',
+            );
+          }
+        }
       } catch (e) {
         debugPrint('Error fetching playlist ${entry.key}: $e');
       }
@@ -136,7 +163,7 @@ class VideosService {
       final jsonData = json.decode(response.body);
       final items = jsonData['items'] as List<dynamic>? ?? [];
 
-      return items
+      final potentialResults = items
           .map((item) {
             final snippet = item['snippet'] as Map<String, dynamic>;
             final id = item['id'] as Map<String, dynamic>;
@@ -161,6 +188,33 @@ class VideosService {
           })
           .where((v) => v.videoId.isNotEmpty)
           .toList();
+
+      if (potentialResults.isEmpty) return [];
+
+      // Filter for embeddable status
+      final videoIds = potentialResults.map((v) => v.videoId).join(',');
+      final statusUrl = Uri.parse(
+        'https://www.googleapis.com/youtube/v3/videos'
+        '?part=status'
+        '&id=$videoIds'
+        '&key=$apiKey',
+      );
+
+      final statusResponse = await client.get(statusUrl);
+      if (statusResponse.statusCode == 200) {
+        final statusData = json.decode(statusResponse.body);
+        final statusItems = statusData['items'] as List<dynamic>? ?? [];
+        final Set<String> embeddableIds = statusItems
+            .where((item) => (item['status']?['embeddable'] as bool? ?? false))
+            .map((item) => item['id'] as String)
+            .toSet();
+
+        return potentialResults
+            .where((v) => embeddableIds.contains(v.videoId))
+            .toList();
+      }
+
+      return potentialResults; // Fallback if status check fails
     } finally {
       client.close();
     }
