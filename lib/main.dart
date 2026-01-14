@@ -1,3 +1,4 @@
+import 'package:deen_stream/core/services/auth_service.dart';
 import 'package:deen_stream/presentation/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_stream/presentation/screens/personal/personal_screen.dart';
@@ -6,8 +7,6 @@ import 'package:deen_stream/presentation/screens/shorts/shorts_screen.dart';
 import 'package:deen_stream/presentation/screens/home/home_screen.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -19,12 +18,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  SignupScreen(),
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder<bool>(
+        future: AuthService().isLoggedIn(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              backgroundColor: Colors.black,
+              body: Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
+            );
+          }
+          if (snapshot.data == true) {
+            return const HomePage();
+          }
+          return const SignupScreen();
+        },
+      ),
     );
   }
 }
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -50,12 +64,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onPageChanged(int index) {
+    FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       selectedIndex = index;
     });
   }
 
   void onItemTapped(int index) {
+    FocusManager.instance.primaryFocus?.unfocus();
     pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 400),
@@ -71,7 +87,7 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: onPageChanged,
         allowImplicitScrolling: true,
         physics: const NeverScrollableScrollPhysics(),
-        children:  [
+        children: [
           HomeScreen(),
           ShortsScreen(),
           SearchScreen(),
@@ -79,28 +95,28 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
-    backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blueAccent,
 
-    items: [
-      CurvedNavigationBarItem(
-        child: Icon(Icons.home_outlined),
-        label: 'Home',
+        items: [
+          CurvedNavigationBarItem(
+            child: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.video_collection_outlined),
+            label: 'Shorts',
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.search_sharp),
+            label: 'Search',
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.perm_identity),
+            label: 'Personal',
+          ),
+        ],
+        onTap: onItemTapped,
       ),
-      CurvedNavigationBarItem(
-        child: Icon(Icons.video_collection_outlined),
-        label: 'Shorts',
-      ),
-      CurvedNavigationBarItem(
-        child: Icon(Icons.search_sharp),
-        label: 'Search',
-      ),
-      CurvedNavigationBarItem(
-        child: Icon(Icons.perm_identity),
-        label: 'Personal',
-      ),
-    ],
-    onTap: onItemTapped,
-  ),
     );
   }
-} 
+}
