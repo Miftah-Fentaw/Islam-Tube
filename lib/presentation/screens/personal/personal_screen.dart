@@ -52,7 +52,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "{Personal}",
+          "Personal",
           style: TextStyle(
             color: primaryBlue,
             fontWeight: FontWeight.bold,
@@ -174,7 +174,10 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     icon: Icons.logout_rounded,
                     title: "Logout",
                     subtitle: "Sign out of your account",
-                    onTap: _handleLogout,
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => _dialogue(),
+                    ),
                     isDestructive: true,
                   ),
 
@@ -182,6 +185,21 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 ],
               ),
             ),
+    );
+  }
+
+  // delete confirmation dialogue on logout
+  Widget _dialogue() {
+    return AlertDialog(
+      title: const Text('Logout'),
+      content: const Text('Are you sure you want to logout?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        TextButton(onPressed: _handleLogout, child: const Text('Logout')),
+      ],
     );
   }
 
